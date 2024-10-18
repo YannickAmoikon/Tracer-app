@@ -103,252 +103,50 @@ export default function ProductsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <TableRow>
-                  <TableCell className="hidden sm:table-cell">
-                    <Image
-                      alt="Product image"
-                      className="aspect-square rounded-md object-cover"
-                      height="64"
-                      src="/placeholder.svg"
-                      width="64"
-                    />
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    Laser Lemonade Machine
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline">Draft</Badge>
-                  </TableCell>
-                  <TableCell>$499.99</TableCell>
-                  <TableCell className="hidden md:table-cell">25</TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    2023-07-12 10:42 AM
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="hidden sm:table-cell">
-                    <Image
-                      alt="Product image"
-                      className="aspect-square rounded-md object-cover"
-                      height="64"
-                      src="/placeholder.svg"
-                      width="64"
-                    />
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    Hypernova Headphones
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline">Active</Badge>
-                  </TableCell>
-                  <TableCell>$129.99</TableCell>
-                  <TableCell className="hidden md:table-cell">100</TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    2023-10-18 03:21 PM
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="hidden sm:table-cell">
-                    <Image
-                      alt="Product image"
-                      className="aspect-square rounded-md object-cover"
-                      height="64"
-                      src="/placeholder.svg"
-                      width="64"
-                    />
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    AeroGlow Desk Lamp
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline">Active</Badge>
-                  </TableCell>
-                  <TableCell>$39.99</TableCell>
-                  <TableCell className="hidden md:table-cell">50</TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    2023-11-29 08:15 AM
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="hidden sm:table-cell">
-                    <Image
-                      alt="Product image"
-                      className="aspect-square rounded-md object-cover"
-                      height="64"
-                      src="/placeholder.svg"
-                      width="64"
-                    />
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    TechTonic Energy Drink
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="secondary">Draft</Badge>
-                  </TableCell>
-                  <TableCell>$2.99</TableCell>
-                  <TableCell className="hidden md:table-cell">0</TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    2023-12-25 11:59 PM
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="hidden sm:table-cell">
-                    <Image
-                      alt="Product image"
-                      className="aspect-square rounded-md object-cover"
-                      height="64"
-                      src="/placeholder.svg"
-                      width="64"
-                    />
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    Gamer Gear Pro Controller
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline">Active</Badge>
-                  </TableCell>
-                  <TableCell>$59.99</TableCell>
-                  <TableCell className="hidden md:table-cell">75</TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    2024-01-01 12:00 AM
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="hidden sm:table-cell">
-                    <Image
-                      alt="Product image"
-                      className="aspect-square rounded-md object-cover"
-                      height="64"
-                      src="/placeholder.svg"
-                      width="64"
-                    />
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    Luminous VR Headset
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline">Active</Badge>
-                  </TableCell>
-                  <TableCell>$199.99</TableCell>
-                  <TableCell className="hidden md:table-cell">30</TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    2024-02-14 02:14 PM
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
+                {[
+                  { name: "Laser Lemonade Machine", status: "Draft", price: "$499.99", sales: 25, created: "2023-07-12 10:42 AM" },
+                  { name: "Hypernova Headphones", status: "Active", price: "$129.99", sales: 100, created: "2023-10-18 03:21 PM" },
+                  { name: "AeroGlow Desk Lamp", status: "Active", price: "$39.99", sales: 50, created: "2023-11-29 08:15 AM" },
+                  { name: "TechTonic Energy Drink", status: "Draft", price: "$2.99", sales: 0, created: "2023-12-25 11:59 PM" },
+                  { name: "Gamer Gear Pro Controller", status: "Active", price: "$59.99", sales: 75, created: "2024-01-01 12:00 AM" },
+                  { name: "Luminous VR Headset", status: "Active", price: "$199.99", sales: 30, created: "2024-02-14 02:14 PM" },
+                ].map((product, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="hidden sm:table-cell">
+                      <Image
+                        alt={`Image de ${product.name}`}
+                        className="aspect-square rounded-md object-cover"
+                        height={64}
+                        width={64}
+                        src="/images/login/Mario.jpg"
+                      />
+                    </TableCell>
+                    <TableCell className="font-medium">{product.name}</TableCell>
+                    <TableCell>
+                      <Badge variant={product.status === "Active" ? "outline" : "secondary"}>
+                        {product.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>{product.price}</TableCell>
+                    <TableCell className="hidden md:table-cell">{product.sales}</TableCell>
+                    <TableCell className="hidden md:table-cell">{product.created}</TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button aria-haspopup="true" size="icon" variant="ghost">
+                            <MoreHorizontal className="h-4 w-4" />
+                            <span className="sr-only">Toggle menu</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuItem>Edit</DropdownMenuItem>
+                          <DropdownMenuItem>Delete</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </CardContent>
