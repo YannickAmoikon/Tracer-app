@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { MonitorCog, Sun, SunMoon } from "lucide-react";
 
 export default function ModeToggle() {
   const { setTheme } = useTheme();
@@ -30,12 +31,15 @@ export default function ModeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
+          <Sun className="w-4 h-4 mr-2" />
           Jour
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
+          <SunMoon className="w-4 h-4 mr-2" />
           Nuit
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
+          <MonitorCog className="w-4 h-4 mr-2" />
           Système
         </DropdownMenuItem>
       </DropdownMenuContent>

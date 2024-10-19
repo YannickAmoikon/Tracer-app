@@ -34,11 +34,11 @@ import { Plus, Save, X } from "lucide-react";
 import { useMemo } from "react";
 
 const availableItems = [
-  { id: "1", name: "Article 1", price: 10 },
-  { id: "2", name: "Article 2", price: 20 },
-  { id: "3", name: "Article 3", price: 30 },
-  { id: "4", name: "Article 4", price: 40 },
-  { id: "5", name: "Article 5", price: 50 },
+  { id: "1", name: "Produit 1", price: 10 },
+  { id: "2", name: "Produit 2", price: 20 },
+  { id: "3", name: "Produit 3", price: 30 },
+  { id: "4", name: "Produit 4", price: 40 },
+  { id: "5", name: "Produit 5", price: 50 },
 ];
 
 const formSchema = z.object({
@@ -54,13 +54,13 @@ const formSchema = z.object({
   itemsOrders: z
     .array(
       z.object({
-        itemId: z.string().min(1, { message: "Sélectionner un article" }),
+        itemId: z.string().min(1, { message: "Sélectionner un produit" }),
         quantity: z
           .number()
           .min(1, { message: "La quantité doit être au moins 1" }),
       }),
     )
-    .min(1, { message: "Sélectionner au moins 1 article commandé" }),
+    .min(1, { message: "Sélectionner au moins 1 produit commandé" }),
 });
 
 export default function OrdersDialog() {
@@ -70,7 +70,7 @@ export default function OrdersDialog() {
       customerName: "",
       customerContact: "",
       customerAddress: "",
-      itemsOrders: [{ itemId: "", quantity: 1 }],
+      itemsOrders: [{ itemId: "", quantity: 0 }],
     },
   });
 
@@ -104,7 +104,7 @@ export default function OrdersDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="sm" className="h-7 gap-1">
+        <Button size="sm" className="space-x-2">
           <Plus className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only">
             Enregistrer une commande
@@ -171,7 +171,7 @@ export default function OrdersDialog() {
               />
             </div>
             <FormItem>
-              <FormLabel>Articles commandés</FormLabel>
+              <FormLabel>Produits commandés</FormLabel>
               <FormControl>
                 <div className="space-y-4 mt-1.5">
                   {fields.map((field, index) => (
@@ -187,7 +187,7 @@ export default function OrdersDialog() {
                       >
                         <FormControl>
                           <SelectTrigger className="flex-grow">
-                            <SelectValue placeholder="Sélectionner un article" />
+                            <SelectValue placeholder="Sélectionner un produit" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -203,8 +203,21 @@ export default function OrdersDialog() {
                         placeholder="Quantité"
                         {...form.register(`itemsOrders.${index}.quantity`, {
                           valueAsNumber: true,
+                          min: 0,
+                          onChange: (e) => {
+                            const value = parseInt(e.target.value);
+                            if (isNaN(value) || value < 0) {
+                              e.target.value = "0";
+                            }
+                          },
                         })}
+                        onKeyDown={(e) => {
+                          if (e.key === "-" || e.key === "e") {
+                            e.preventDefault();
+                          }
+                        }}
                         className="w-20"
+                        min="0"
                       />
                       <Input
                         type="number"
@@ -215,8 +228,9 @@ export default function OrdersDialog() {
                       />
                       <Button
                         type="button"
+                        variant="destructive"
                         size="sm"
-                        className="p-1 border border-red-500 bg-white text-red-500 rounded-sm hover:bg-red-500 hover:text-white"
+                        className="px-2"
                         onClick={() => {
                           if (fields.length > 1) {
                             remove(index);
@@ -231,13 +245,13 @@ export default function OrdersDialog() {
               </FormControl>
               <Button
                 type="button"
-                variant="outline"
+                variant="ghost"
                 size="sm"
-                className="mt-2"
-                onClick={() => append({ itemId: "", quantity: 1 })}
+                className="mt-4 border"
+                onClick={() => append({ itemId: "", quantity: 0 })}
               >
                 <Plus className="h-4 w-4 mr-2" />
-                Ajouter un article
+                Ajouter un produit
               </Button>
               <FormMessage />
             </FormItem>

@@ -2,13 +2,16 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
+  CircleHelp,
   Home,
   LineChart,
+  LogOut,
   Package,
   Package2,
   PanelLeft,
   Search,
   ShoppingCart,
+  UserRoundPen,
   Users2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -83,11 +86,11 @@ export default function Header() {
       </Sheet>
       <BreadcrumbNavigation />
       <div className="relative ml-auto flex-1 md:grow-0">
-        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+        <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
           type="search"
           placeholder="Faire une recherche..."
-          className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]"
+          className="w-full rounded-lg bg-background pl-10 md:w-[200px] lg:w-[320px]"
         />
       </div>
       <DropdownMenu>
@@ -109,10 +112,19 @@ export default function Header() {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Mon compte</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profil</DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
+          <DropdownMenuItem>
+            <UserRoundPen className="w-4 h-4 mr-2" />
+            Profil
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <CircleHelp className="w-4 h-4 mr-2" />
+            Support
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Se déconnecter</DropdownMenuItem>
+          <DropdownMenuItem>
+            <LogOut className="w-4 h-4 mr-2" />
+            Se déconnecter
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
