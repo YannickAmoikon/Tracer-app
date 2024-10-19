@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect } from "react";
 import {
   Table,
@@ -10,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Edit, MoreHorizontal, Trash2Icon } from "lucide-react";
+import { Edit, ListCollapse, MoreHorizontal, Trash2Icon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,7 +34,7 @@ const commandes: Commande[] = [
     client: "Jean Dupont",
     montant: 499.99,
     contact: "jean.dupont@email.com",
-    dateCommande: "2023-07-12 10:42",
+    dateCommande: "2024-03-10 10:42",
   },
   {
     reference: "CMD-002",
@@ -44,7 +42,7 @@ const commandes: Commande[] = [
     client: "Marie Martin",
     montant: 129.99,
     contact: "marie.martin@email.com",
-    dateCommande: "2023-10-18 15:21",
+    dateCommande: "2024-03-09 15:21",
   },
   {
     reference: "CMD-003",
@@ -52,7 +50,7 @@ const commandes: Commande[] = [
     client: "Pierre Durand",
     montant: 39.99,
     contact: "pierre.durand@email.com",
-    dateCommande: "2023-11-29 08:15",
+    dateCommande: "2024-03-08 08:15",
   },
   {
     reference: "CMD-004",
@@ -60,7 +58,7 @@ const commandes: Commande[] = [
     client: "Sophie Lefebvre",
     montant: 299.99,
     contact: "sophie.lefebvre@email.com",
-    dateCommande: "2023-12-25 23:59",
+    dateCommande: "2024-03-07 23:59",
   },
   {
     reference: "CMD-005",
@@ -68,7 +66,7 @@ const commandes: Commande[] = [
     client: "Luc Moreau",
     montant: 59.99,
     contact: "luc.moreau@email.com",
-    dateCommande: "2024-01-01 00:00",
+    dateCommande: "2024-03-06 00:00",
   },
   {
     reference: "CMD-006",
@@ -76,7 +74,7 @@ const commandes: Commande[] = [
     client: "Émilie Rousseau",
     montant: 89.99,
     contact: "emilie.rousseau@email.com",
-    dateCommande: "2024-01-15 14:30",
+    dateCommande: "2024-03-05 14:30",
   },
   {
     reference: "CMD-007",
@@ -84,7 +82,7 @@ const commandes: Commande[] = [
     client: "Thomas Bernard",
     montant: 149.99,
     contact: "thomas.bernard@email.com",
-    dateCommande: "2024-01-20 09:45",
+    dateCommande: "2024-03-04 09:45",
   },
   {
     reference: "CMD-008",
@@ -92,7 +90,7 @@ const commandes: Commande[] = [
     client: "Claire Dubois",
     montant: 79.99,
     contact: "claire.dubois@email.com",
-    dateCommande: "2024-02-01 11:20",
+    dateCommande: "2024-03-03 11:20",
   },
   {
     reference: "CMD-009",
@@ -100,7 +98,7 @@ const commandes: Commande[] = [
     client: "Antoine Leroy",
     montant: 199.99,
     contact: "antoine.leroy@email.com",
-    dateCommande: "2024-02-10 16:55",
+    dateCommande: "2024-03-02 16:55",
   },
   {
     reference: "CMD-010",
@@ -108,7 +106,7 @@ const commandes: Commande[] = [
     client: "Isabelle Girard",
     montant: 69.99,
     contact: "isabelle.girard@email.com",
-    dateCommande: "2024-02-15 08:30",
+    dateCommande: "2024-03-01 08:30",
   },
   {
     reference: "CMD-011",
@@ -116,7 +114,7 @@ const commandes: Commande[] = [
     client: "François Lemaire",
     montant: 159.99,
     contact: "francois.lemaire@email.com",
-    dateCommande: "2024-02-20 13:45",
+    dateCommande: "2024-02-29 13:45",
   },
   {
     reference: "CMD-012",
@@ -124,7 +122,7 @@ const commandes: Commande[] = [
     client: "Céline Petit",
     montant: 109.99,
     contact: "celine.petit@email.com",
-    dateCommande: "2024-02-25 10:15",
+    dateCommande: "2024-02-28 10:15",
   },
   {
     reference: "CMD-013",
@@ -132,7 +130,7 @@ const commandes: Commande[] = [
     client: "Julien Roux",
     montant: 49.99,
     contact: "julien.roux@email.com",
-    dateCommande: "2024-03-01 17:30",
+    dateCommande: "2024-02-27 17:30",
   },
   {
     reference: "CMD-014",
@@ -140,7 +138,7 @@ const commandes: Commande[] = [
     client: "Aurélie Fontaine",
     montant: 89.99,
     contact: "aurelie.fontaine@email.com",
-    dateCommande: "2024-03-05 09:00",
+    dateCommande: "2024-02-26 09:00",
   },
   {
     reference: "CMD-015",
@@ -148,12 +146,13 @@ const commandes: Commande[] = [
     client: "Mathieu Blanc",
     montant: 129.99,
     contact: "mathieu.blanc@email.com",
-    dateCommande: "2024-03-10 14:20",
+    dateCommande: "2024-02-25 14:20",
   },
 ];
 
 interface OrdersTableProps {
   statusFilter: "all" | "En cours" | "Acceptée" | "Livrée" | "Annulée";
+  dateRange: { from: Date | undefined; to: Date | undefined };
   currentPage: number;
   ordersPerPage: number;
   updateTotalFilteredOrders: (total: number) => void;
@@ -161,13 +160,26 @@ interface OrdersTableProps {
 
 export default function OrdersTable({
   statusFilter,
+  dateRange,
   currentPage,
   ordersPerPage,
   updateTotalFilteredOrders,
 }: OrdersTableProps): JSX.Element {
-  const filteredCommandes = commandes.filter(
-    (commande) => statusFilter === "all" || commande.statut === statusFilter,
-  );
+  const filteredCommandes = commandes.filter((commande) => {
+    const dateCommande = new Date(commande.dateCommande);
+
+    // Filtre par statut
+    if (statusFilter !== "all" && commande.statut !== statusFilter) {
+      return false;
+    }
+
+    // Filtre par plage de dates
+    if (dateRange.from && dateRange.to) {
+      return dateCommande >= dateRange.from && dateCommande <= dateRange.to;
+    }
+
+    return true;
+  });
 
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
@@ -228,6 +240,10 @@ export default function OrdersTable({
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                  <DropdownMenuItem>
+                    <ListCollapse className="w-4 h-4 mr-2" />
+                    Détails
+                  </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Edit className="w-4 h-4 mr-2" />
                     Modifier

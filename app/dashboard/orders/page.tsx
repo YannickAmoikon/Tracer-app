@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { File, ListFilter, ChevronLeft, ChevronRight } from "lucide-react";
+import { File, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,15 +11,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 import OrdersDialog from "@/components/features/dashboard/orders/OrdersDialog";
 import OrdersTable from "@/components/features/dashboard/orders/OrdersTable";
 
@@ -29,6 +29,13 @@ export default function OrdersPage(): JSX.Element {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalFilteredOrders, setTotalFilteredOrders] = useState(0);
+  const [dateRange, setDateRange] = useState<{
+    from: Date | null;
+    to: Date | null;
+  }>({
+    from: null,
+    to: null,
+  });
   const ordersPerPage = 8;
 
   const handleStatusChange = (value: StatusFilter) => {
@@ -59,25 +66,38 @@ export default function OrdersPage(): JSX.Element {
             <TabsTrigger value="Annulée">Annulées</TabsTrigger>
           </TabsList>
           <div className="ml-auto flex items-center gap-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+            <Popover>
+              <PopoverTrigger asChild>
                 <Button variant="outline" size="sm" className="space-x-2">
-                  <ListFilter className="h-3.5 w-3.5" />
+                  <Calendar className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                    Filtrer
+                    {dateRange.from ? (
+                      dateRange.to ? (
+                        <>
+                          {format(dateRange.from, "P", { locale: fr })} -{" "}
+                          {format(dateRange.to, "P", { locale: fr })}
+                        </>
+                      ) : (
+                        format(dateRange.from, "P", { locale: fr })
+                      )
+                    ) : (
+                      "Filtrer par dates"
+                    )}
                   </span>
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Filtrer par</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuCheckboxItem checked>
-                  Actif
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem>Brouillon</DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem>Archivé</DropdownMenuCheckboxItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="end">
+                <CalendarComponent
+                  mode="range"
+                  selected={dateRange}
+                  onSelect={(range) =>
+                    setDateRange(range || { from: null, to: null })
+                  }
+                  locale={fr}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
             <Button size="sm" variant="outline" className="space-x-2">
               <File className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
@@ -100,6 +120,7 @@ export default function OrdersPage(): JSX.Element {
               <CardContent>
                 <OrdersTable
                   statusFilter={statusFilter}
+                  dateRange={dateRange}
                   currentPage={currentPage}
                   ordersPerPage={ordersPerPage}
                   updateTotalFilteredOrders={updateTotalFilteredOrders}
@@ -124,7 +145,6 @@ export default function OrdersPage(): JSX.Element {
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                   >
-                    <ChevronLeft className="h-4 w-4 mr-2" />
                     Précédent
                   </Button>
                   <Button
@@ -136,7 +156,6 @@ export default function OrdersPage(): JSX.Element {
                     }
                   >
                     Suivant
-                    <ChevronRight className="h-4 w-4 ml-2" />
                   </Button>
                 </div>
               </CardFooter>
