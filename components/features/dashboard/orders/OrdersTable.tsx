@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -56,7 +58,7 @@ const commandes: Commande[] = [
     reference: "CMD-004",
     statut: "Annulée",
     client: "Sophie Lefebvre",
-    montant: 2.99,
+    montant: 299.99,
     contact: "sophie.lefebvre@email.com",
     dateCommande: "2023-12-25 23:59",
   },
@@ -100,21 +102,83 @@ const commandes: Commande[] = [
     contact: "antoine.leroy@email.com",
     dateCommande: "2024-02-10 16:55",
   },
+  {
+    reference: "CMD-010",
+    statut: "Livrée",
+    client: "Isabelle Girard",
+    montant: 69.99,
+    contact: "isabelle.girard@email.com",
+    dateCommande: "2024-02-15 08:30",
+  },
+  {
+    reference: "CMD-011",
+    statut: "Acceptée",
+    client: "François Lemaire",
+    montant: 159.99,
+    contact: "francois.lemaire@email.com",
+    dateCommande: "2024-02-20 13:45",
+  },
+  {
+    reference: "CMD-012",
+    statut: "En cours",
+    client: "Céline Petit",
+    montant: 109.99,
+    contact: "celine.petit@email.com",
+    dateCommande: "2024-02-25 10:15",
+  },
+  {
+    reference: "CMD-013",
+    statut: "Annulée",
+    client: "Julien Roux",
+    montant: 49.99,
+    contact: "julien.roux@email.com",
+    dateCommande: "2024-03-01 17:30",
+  },
+  {
+    reference: "CMD-014",
+    statut: "Livrée",
+    client: "Aurélie Fontaine",
+    montant: 89.99,
+    contact: "aurelie.fontaine@email.com",
+    dateCommande: "2024-03-05 09:00",
+  },
+  {
+    reference: "CMD-015",
+    statut: "Acceptée",
+    client: "Mathieu Blanc",
+    montant: 129.99,
+    contact: "mathieu.blanc@email.com",
+    dateCommande: "2024-03-10 14:20",
+  },
 ];
 
 interface OrdersTableProps {
   statusFilter: "all" | "En cours" | "Acceptée" | "Livrée" | "Annulée";
+  currentPage: number;
+  ordersPerPage: number;
+  updateTotalFilteredOrders: (total: number) => void;
 }
 
 export default function OrdersTable({
   statusFilter,
+  currentPage,
+  ordersPerPage,
+  updateTotalFilteredOrders,
 }: OrdersTableProps): JSX.Element {
   const filteredCommandes = commandes.filter(
     (commande) => statusFilter === "all" || commande.statut === statusFilter,
   );
 
-  console.log("Status Filter:", statusFilter);
-  console.log("Filtered Commandes:", filteredCommandes);
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = filteredCommandes.slice(
+    indexOfFirstOrder,
+    indexOfLastOrder,
+  );
+
+  useEffect(() => {
+    updateTotalFilteredOrders(filteredCommandes.length);
+  }, [filteredCommandes.length, updateTotalFilteredOrders]);
 
   return (
     <Table>
@@ -134,7 +198,7 @@ export default function OrdersTable({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {filteredCommandes.map((commande) => (
+        {currentOrders.map((commande) => (
           <TableRow key={commande.reference}>
             <TableCell className="font-medium">{commande.reference}</TableCell>
             <TableCell>
@@ -165,11 +229,11 @@ export default function OrdersTable({
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
                   <DropdownMenuItem>
-                    <Edit className="h-4 w-4 mr-2" />
+                    <Edit className="w-4 h-4 mr-2" />
                     Modifier
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Trash2Icon className="h-4 w-4 mr-2" />
+                    <Trash2Icon className="w-4 h-4 mr-2" />
                     Supprimer
                   </DropdownMenuItem>
                 </DropdownMenuContent>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { File, ListFilter } from "lucide-react";
+import { File, ListFilter, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -27,9 +27,21 @@ type StatusFilter = "all" | "En cours" | "Acceptée" | "Livrée" | "Annulée";
 
 export default function OrdersPage(): JSX.Element {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalFilteredOrders, setTotalFilteredOrders] = useState(0);
+  const ordersPerPage = 8;
 
   const handleStatusChange = (value: StatusFilter) => {
     setStatusFilter(value);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
+  const updateTotalFilteredOrders = (total: number) => {
+    setTotalFilteredOrders(total);
   };
 
   return (
@@ -75,82 +87,62 @@ export default function OrdersPage(): JSX.Element {
             <OrdersDialog />
           </div>
         </div>
-        <TabsContent value="all">
-          <Card>
-            <CardHeader>
-              <CardTitle>Commandes</CardTitle>
-              <CardDescription>
-                Gérez vos commandes et visualisez leurs performances
-                commerciales.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <OrdersTable statusFilter={statusFilter} />
-            </CardContent>
-            <CardFooter>
-              <div className="text-xs text-muted-foreground">
-                Affichage <strong>1 - 9</strong> de <strong>32</strong>{" "}
-                commandes
-              </div>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-        <TabsContent value="En cours">
-          <Card>
-            <CardHeader>
-              <CardTitle>Commandes</CardTitle>
-              <CardDescription>
-                Gérez vos commandes et visualisez leurs performances
-                commerciales.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <OrdersTable statusFilter={statusFilter} />
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="Acceptée">
-          <Card>
-            <CardHeader>
-              <CardTitle>Commandes</CardTitle>
-              <CardDescription>
-                Gérez vos commandes et visualisez leurs performances
-                commerciales.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <OrdersTable statusFilter={statusFilter} />
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="Livrée">
-          <Card>
-            <CardHeader>
-              <CardTitle>Commandes</CardTitle>
-              <CardDescription>
-                Gérez vos commandes et visualisez leurs performances
-                commerciales.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <OrdersTable statusFilter={statusFilter} />
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="Annulée">
-          <Card>
-            <CardHeader>
-              <CardTitle>Commandes</CardTitle>
-              <CardDescription>
-                Gérez vos commandes et visualisez leurs performances
-                commerciales.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <OrdersTable statusFilter={statusFilter} />
-            </CardContent>
-          </Card>
-        </TabsContent>
+        {["all", "En cours", "Acceptée", "Livrée", "Annulée"].map((status) => (
+          <TabsContent key={status} value={status}>
+            <Card>
+              <CardHeader>
+                <CardTitle>Commandes</CardTitle>
+                <CardDescription>
+                  Gérez vos commandes et visualisez leurs performances
+                  commerciales.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <OrdersTable
+                  statusFilter={statusFilter}
+                  currentPage={currentPage}
+                  ordersPerPage={ordersPerPage}
+                  updateTotalFilteredOrders={updateTotalFilteredOrders}
+                />
+              </CardContent>
+              <CardFooter className="flex justify-between items-center">
+                <div className="text-xs text-muted-foreground">
+                  Affichage{" "}
+                  <strong>
+                    {totalFilteredOrders > 0
+                      ? (currentPage - 1) * ordersPerPage + 1
+                      : 0}{" "}
+                    -{" "}
+                    {Math.min(currentPage * ordersPerPage, totalFilteredOrders)}
+                  </strong>{" "}
+                  de <strong>{totalFilteredOrders}</strong> commandes
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                  >
+                    <ChevronLeft className="h-4 w-4 mr-2" />
+                    Précédent
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={
+                      currentPage * ordersPerPage >= totalFilteredOrders
+                    }
+                  >
+                    Suivant
+                    <ChevronRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </div>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+        ))}
       </Tabs>
     </>
   );
