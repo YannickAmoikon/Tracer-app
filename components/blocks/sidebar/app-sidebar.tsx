@@ -2,8 +2,7 @@
 
 import * as React from "react"
 import {
-  BookOpen,
-  Bot,
+  UsersRound,
   Command,
   Frame,
   LifeBuoy,
@@ -11,11 +10,10 @@ import {
   PieChart,
   Send,
   Settings2,
-  SquareTerminal,
+  Monitor
 } from "lucide-react"
 
 import { NavMain } from "@/components/blocks/sidebar/nav-main"
-import { NavProjects } from "@/components/blocks/sidebar/nav-projects"
 import { NavUser } from "@/components/blocks/sidebar/nav-user"
 import {
   Sidebar,
@@ -35,86 +33,31 @@ const data = {
   },
   navMain: [
     {
-      title: "Playground",
+      title: "Vue générale",
       url: "#",
-      icon: SquareTerminal,
+      icon: Monitor,
       isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
     },
     {
-      title: "Models",
+      title: "Clients",
       url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
+      icon: UsersRound,
     },
     {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
+      title: "Paramètres",
       url: "#",
       icon: Settings2,
       items: [
         {
-          title: "General",
+          title: "Équipe",
           url: "#",
         },
         {
-          title: "Team",
+          title: "Facturation",
           url: "#",
         },
         {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
+          title: "Limites",
           url: "#",
         },
       ],
@@ -122,29 +65,29 @@ const data = {
   ],
   navSecondary: [
     {
-      title: "Support",
+      title: "Assistance",
       url: "#",
       icon: LifeBuoy,
     },
     {
-      title: "Feedback",
+      title: "Commentaires",
       url: "#",
       icon: Send,
     },
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "Ingénierie design",
       url: "#",
       icon: Frame,
     },
     {
-      name: "Sales & Marketing",
+      name: "Ventes et marketing",
       url: "#",
       icon: PieChart,
     },
     {
-      name: "Travel",
+      name: "Voyages",
       url: "#",
       icon: Map,
     },
@@ -163,8 +106,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
+                  <span className="truncate font-medium">Tracer App</span>
+                  <span className="truncate text-xs">ARMADA CORP Entreprise</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -173,7 +116,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
