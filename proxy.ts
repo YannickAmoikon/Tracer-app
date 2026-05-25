@@ -5,7 +5,7 @@ import { SESSION_COOKIE_NAME } from "@/lib/session"
 
 const publicPaths = ["/login", "/api/auth/login"]
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   if (
