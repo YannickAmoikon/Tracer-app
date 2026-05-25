@@ -1,0 +1,1 @@
+const APICONFIG = process.env 
