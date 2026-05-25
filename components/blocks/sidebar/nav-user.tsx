@@ -1,13 +1,24 @@
 "use client"
 
 import {
-  BadgeCheck,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+
+import {
   Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
-  Sparkles,
 } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { AuthServiceError, logout } from "@/services/auth.service"
 
 import {
   Avatar,
@@ -17,7 +28,6 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -39,9 +49,29 @@ export function NavUser({
     avatar: string
   }
 }) {
+  const router = useRouter()
   const { isMobile } = useSidebar()
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const [showAlertDialogLogout, setShowAlertDialogLogout] = useState<boolean>(false)
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    try {
+      await logout()
+      router.push("/login")
+      router.refresh()
+    } catch (error) {
+      console.error(error)
+      if (error instanceof AuthServiceError) {
+        alert(error.message)
+      }
+    } finally {
+      setIsLoggingOut(false)
+    }
+  }
 
   return (
+    <>
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
@@ -85,7 +115,10 @@ export function NavUser({
                 Notifications
               </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              disabled={isLoggingOut}
+              onClick={() => setShowAlertDialogLogout(true)}
+            >
               <LogOut />
               Se déconnecter
             </DropdownMenuItem>
@@ -93,5 +126,23 @@ export function NavUser({
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
+    <AlertDialog open={showAlertDialogLogout} onOpenChange={setShowAlertDialogLogout}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Confirmer la déconnexion ?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Vous allez être déconnecté et redirigé vers la page de connexion.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Annuler</AlertDialogCancel>
+          <AlertDialogAction onClick={handleLogout} disabled={isLoggingOut}>
+            Se déconnecter
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+
+    </>
   )
 }
